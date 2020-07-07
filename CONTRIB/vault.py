@@ -71,19 +71,19 @@ def encrypt(key, infile, outfile):
 
 # Function for decrypting data
 def decrypt(key, infile):
-    cipher = int(key)
+    cipher = int(key) # Read in key
     my_data = ""
     n = 0
     decode_step_1 = 0
     decoded = ""
 
-    my_file = open(sys.argv[infile], "r")
+    my_file = open(sys.argv[infile], "r") # Open up decrypt file
 
-    for i in my_file.read():
+    for i in my_file.read(): # Read in file to decrypt
         my_data += i
 
     length = len(my_data.split())
-    for i in range(0, length):
+    for i in range(0, length): # Step through each piece of data separated by a space and convert back to ascii
         decode_step_1 = 0
         decode_step_1 = abs(int(my_data.split(" ")[n]) - cipher)
         for x in str(decode_step_1).split(" "):
@@ -112,7 +112,7 @@ if len(sys.argv) != 1:
                 infile = (sys.argv.index("--decrypt")+1)
             except:
                 pass
-    if feature == "encrypt":
+    if feature == "encrypt": # Do this block if we are encrypting
         if len(sys.argv) >= 4:
             if "--key-from-stdin" in sys.argv:
                 encrypt(stdin_key(), infile, outfile)
@@ -123,7 +123,7 @@ if len(sys.argv) != 1:
         else:
             print("Missing file to encrypt")
             exit(1)
-    elif feature == "decrypt":
+    elif feature == "decrypt": # Do this block if we can decrypting
         if len(sys.argv) >= 3:
             if "--key-from-stdin" in sys.argv:
                 decrypt(stdin_key(), infile)
@@ -132,13 +132,13 @@ if len(sys.argv) != 1:
         else:
             print("Missing file to decrypt")
             exit(1)
-    elif ((sys.argv[1] == "-h") or (sys.argv[1] == "--help")):
+    elif ((sys.argv[1] == "-h") or (sys.argv[1] == "--help")): # Provide some useful information in case the user asks for help
         print("Usage: vault [--key-from-stdin] {--encypt | -e} INFILE OUTFILE\n       vault [--key-from-stdin] {--decrypt | -d} INFILE")
     else:
         print("vault requires an argument!")
         print("Try 'vault -h for more information.")
         exit(1)
 else:
-    print("vault requires an argument!")
+    print("vault requires an argument!") # Catchall in case something doesn't make sense
     print("Try 'vault -h for more information.")
     exit(1)
